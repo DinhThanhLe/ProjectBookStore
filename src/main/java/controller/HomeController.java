@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.awt.print.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import model.Books;
 import model.Categories;
@@ -23,6 +25,7 @@ import model.Categories;
  * @author legion
  */
 public class HomeController extends HttpServlet {
+    
      ProductDAO productDAO = new ProductDAO() ;
      CategoryDao categoryDao = new  CategoryDao() ;
         
@@ -32,7 +35,9 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Books> listBook = productDAO.findAll() ;
+        
+        List<Books> listBook = findBookDoGet(request , response)  ;
+        
         List<Categories> listCategory = categoryDao.findAll() ;
         
          HttpSession session = request.getSession() ;
@@ -46,14 +51,6 @@ public class HomeController extends HttpServlet {
                rq.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,5 +66,24 @@ public class HomeController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private List<Books> findBookDoGet(HttpServletRequest request, HttpServletResponse response) {
+        List<Books> listBook ;
+           String actionSearch = request.getParameter("search")== null ? "default" : request.getParameter("search") ;
+        switch (actionSearch) {
+            case "category":
+                 String categoryID = request.getParameter("categoryID") ;
+                 listBook = productDAO.findByCategoryID(categoryID) ;
+                break;
+            case "keyword": 
+                String keyword = request.getParameter("keyword") ;
+                listBook = productDAO.findByKeyword(keyword) ;
+                 break;
+            default:
+                listBook = productDAO.findAll() ;
+        }
+        return listBook ;
+
+    }
 
 }

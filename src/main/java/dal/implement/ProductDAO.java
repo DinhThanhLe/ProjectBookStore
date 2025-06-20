@@ -46,5 +46,45 @@ public class ProductDAO extends GenericDAO<Books>{
         return list.isEmpty() ? null : list.get(0) ;
  
     }
+
+    public List<Books> findByCategoryID(String categoryID) {
+
+String sql = "SELECT [book_id]\n" +
+"      ,[title]\n" +
+"      ,[description]\n" +
+"      ,[cover_image_url]\n" +
+"      ,[publication_year]\n" +
+"      ,[page_count]\n" +
+"      ,[category_id]\n" +
+"      ,[publisher_id]\n" +
+"      ,[author_id]\n" +
+"  FROM [dbo].[Books] where category_id = ?" ;
+
+ parameterMap = new LinkedHashMap<>() ;
+   parameterMap.put("id", categoryID) ; 
+
+ return queryGenericDAO(Books.class, sql, parameterMap) ; 
+
+
+    }
+
+    public List<Books> findByKeyword(String keyword) {
+
+String sql = "SELECT [book_id]\n" +
+"      ,[title]\n" +
+"      ,[description]\n" +
+"      ,[cover_image_url]\n" +
+"      ,[publication_year]\n" +
+"      ,[page_count]\n" +
+"      ,[category_id]\n" +
+"      ,[publisher_id]\n" +
+"      ,[author_id]\n" +
+"  FROM [dbo].[Books] where title like   ?" ;
+
+parameterMap = new LinkedHashMap<>() ;
+   parameterMap.put("nameContain", "%" +keyword +"%") ; 
+   
+return  queryGenericDAO(Books.class, sql, parameterMap) ; 
+    }
     
 }

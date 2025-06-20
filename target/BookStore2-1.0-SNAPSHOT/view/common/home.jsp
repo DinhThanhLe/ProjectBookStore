@@ -103,7 +103,7 @@
                                     <ul>
 
                                     <c:forEach items="${listCategory}" var="cate">
-                                        <li><a href="#">${cate.category_name}</a></li>
+                                        <li><a href="home?search=category&categoryID=${cate.category_id}">${cate.category_name}</a></li>
                                         </c:forEach>
                                 </ul>
                             </div>
@@ -358,7 +358,7 @@
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="product-details?id=${b.book_id}">
-                                                        <img src="${pageContext.request.contextPath}/img/product/1.jpg" alt="book" class="primary" />
+                                                        <img src="${pageContext.request.contextPath}/img/product/${b.cover_image_url}" alt="book" class="primary" />
                                                     </a>
                                                  
 
@@ -370,17 +370,17 @@
                                                     <h4><a href="#">${b.title}  </a></h4>
                                                     <div class="product-price">
                                                         <ul>
-                                                            <li>$60.00</li>
+                                                            <li>Nhận báo giá</li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div class="product-link">
                                                     <div class="product-button">
-                                                        <a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                        <a href="product-details?id=1" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                     </div>
                                                     <div class="add-to-link">
                                                         <ul>
-                                                            <li><a href="product-details.html" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                                            <li><a href="product-details?id=1" title="Details"><i class="fa fa-external-link"></i></a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
