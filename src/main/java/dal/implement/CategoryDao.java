@@ -18,7 +18,6 @@ public class CategoryDao extends GenericDAO<Categories>{
     public List<Categories> findAll() {
    return  queryGenericDAO(Categories.class) ;
 
-
     }
 
     @Override

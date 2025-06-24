@@ -8,6 +8,14 @@
         <servlet-name>ProductDetailsController</servlet-name>
         <servlet-class>controller.ProductDetailsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.admin.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductAdminController</servlet-name>
+        <servlet-class>controller.admin.ProductAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -19,6 +27,14 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductAdminController</servlet-name>
+        <url-pattern>/admin/product</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

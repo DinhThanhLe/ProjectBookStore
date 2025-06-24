@@ -52,7 +52,7 @@ public class ProductDetailsController extends HttpServlet {
       request.setAttribute("variantList", variantList);
     request.setAttribute("materialList", materialList);
     request.setAttribute("languageList", languageList);
-    RequestDispatcher rq = getServletContext().getRequestDispatcher("/view/common/product-details.jsp");
+    RequestDispatcher rq = getServletContext().getRequestDispatcher("/view/user/product-details.jsp");
                rq.forward(request, response);
      // request.getRequestDispatcher("product-details.jsp").forward(request, response);
     }
@@ -80,5 +80,6 @@ public class ProductDetailsController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
 
 }

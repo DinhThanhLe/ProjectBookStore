@@ -24,12 +24,21 @@ import lombok.ToString;
 @Getter
 @Setter
 public class Book_Variants {
-    private Integer variant_id ;
-    private Integer book_id ;
-    private Integer material_id ;
-    private double price ;
-    private Integer stock_quantity ;
-    private double weight ;
+    // Core fields từ bảng Book_Variants
+    private Integer variant_id;
+    private Integer book_id;
+    private Integer material_id;
     private Integer language_id;
+    private double price;
+    private Integer stock_quantity;
+    private double weight;
+    
+    // Display fields từ JOIN
+    private String title;           // Từ Books
+    private String material_type;   // Từ Materials
+    private String language_name;   // Từ Languages
+    private String category_name;   // Từ Categories (qua Books)
+    private String author_name;     // Từ Authors (qua Books)
+    private String description;
     
 }

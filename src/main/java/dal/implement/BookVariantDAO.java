@@ -14,32 +14,50 @@ import model.Books;
  *
  * @author legion
  */
-public class BookVariantDAO extends GenericDAO<Book_Variants>{
+public class BookVariantDAO extends GenericDAO<Book_Variants> {
 
-    public  List<Book_Variants> getVariantsByBookId(Books book) {
- String sql = "SELECT [variant_id]\n" +
-"      ,[book_id]\n" +
-"      ,[material_id]\n" +
-"      ,[language_id]\n" +
-"      ,[price]\n" +
-"      ,[stock_quantity]\n" +
-"      ,[weight]\n" +
-"  FROM [dbo].[Book_Variants] where book_id = ? " ;
-  parameterMap = new LinkedHashMap<>() ;
-  parameterMap.put("id", book.getBook_id()) ; 
-   return queryGenericDAO(Book_Variants.class, sql, parameterMap) ;
+    public List<Book_Variants> getVariantsByBookId(Books book) {
+        String sql = "SELECT [variant_id]\n"
+                + "      ,[book_id]\n"
+                + "      ,[material_id]\n"
+                + "      ,[language_id]\n"
+                + "      ,[price]\n"
+                + "      ,[stock_quantity]\n"
+                + "      ,[weight]\n"
+                + "  FROM [dbo].[Book_Variants] where book_id = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", book.getBook_id());
+        return queryGenericDAO(Book_Variants.class, sql, parameterMap);
 
 
     }
 
     @Override
     public List<Book_Variants> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT bv.variant_id, bv.book_id, b.title,         \n" +
+"               bv.material_id, m.material_type,        \n" +
+"               bv.language_id, l.language_name,        \n" +
+"               bv.price, bv.stock_quantity, bv.weight,        \n" +
+"               c.category_id, c.category_name,          \n" +
+"               a.author_id, a.author_name , b.description             \n" +
+"               FROM Book_Variants bv        \n" +
+"               JOIN Books b ON bv.book_id = b.book_id        \n" +
+"               JOIN Materials m ON bv.material_id = m.material_id     \n" +
+"               JOIN Languages l ON bv.language_id = l.language_id        \n" +
+"               JOIN Categories c on c.category_id = b.category_id        \n" +
+"               JOIN Authors a on a.author_id = b.author_id         \n" +
+"               ORDER BY bv.variant_id ;   "  ;
+              parameterMap = new LinkedHashMap<>();
+              return queryGenericDAO(Book_Variants.class, sql, parameterMap);
+
+
     }
 
     @Override
     public int insert(Book_Variants t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+              return insertGenericDAO(t) ;
+
     }
-    
+
 }

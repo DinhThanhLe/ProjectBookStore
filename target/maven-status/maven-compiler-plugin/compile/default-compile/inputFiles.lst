@@ -1,3 +1,4 @@
+D:\PRJ\BookStore2\src\main\java\dal\implement\AuthorDAO.java
 D:\PRJ\BookStore2\src\main\java\com\mycompany\bookstore2\JakartaRestConfiguration.java
 D:\PRJ\BookStore2\src\main\java\dal\implement\ProductDAO.java
 D:\PRJ\BookStore2\src\main\java\dal\implement\BookVariantDAO.java
@@ -6,11 +7,16 @@ D:\PRJ\BookStore2\src\main\java\dal\DBContext.java
 D:\PRJ\BookStore2\src\main\java\controller\ProductDetailsController.java
 D:\PRJ\BookStore2\src\main\java\dal\implement\CategoryDao.java
 D:\PRJ\BookStore2\src\main\java\model\Categories.java
+D:\PRJ\BookStore2\src\main\java\controller\admin\DashboardController.java
 D:\PRJ\BookStore2\src\main\java\dal\GenericDAO.java
 D:\PRJ\BookStore2\src\main\java\com\mycompany\bookstore2\resources\JakartaEE10Resource.java
+D:\PRJ\BookStore2\src\main\java\model\PageControl.java
+D:\PRJ\BookStore2\src\main\java\constant\CommonConst.java
 D:\PRJ\BookStore2\src\main\java\controller\HomeController.java
 D:\PRJ\BookStore2\src\main\java\model\Books.java
 D:\PRJ\BookStore2\src\main\java\model\Languages.java
+D:\PRJ\BookStore2\src\main\java\controller\admin\ProductAdminController.java
 D:\PRJ\BookStore2\src\main\java\model\Materials.java
 D:\PRJ\BookStore2\src\main\java\model\Book_Variants.java
 D:\PRJ\BookStore2\src\main\java\dal\implement\LanguagesDAO.java
+D:\PRJ\BookStore2\src\main\java\model\Authors.java

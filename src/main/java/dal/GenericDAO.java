@@ -8,11 +8,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 /**
  *
  * @author ADMIN
@@ -177,7 +180,7 @@ public abstract class GenericDAO<T> extends DBContext {
             IllegalAccessException,
             InvocationTargetException {
 
-        // Khởi tạo đối tượng
+       // Khởi tạo đối tượng
         T obj = clazz.getDeclaredConstructor().newInstance();
 
         // Lấy danh sách các field của lớp
@@ -192,7 +195,8 @@ public abstract class GenericDAO<T> extends DBContext {
             field.set(obj, value);
         }
 
-        return obj;
+        return obj; 
+   
     }
 
     /**
