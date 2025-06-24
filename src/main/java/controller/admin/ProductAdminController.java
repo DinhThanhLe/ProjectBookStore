@@ -57,7 +57,10 @@ public class ProductAdminController extends HttpServlet {
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         switch (action) {
             case "add":
-                addProduct(request, response);
+                addProduct(request);
+                break;
+            case "delete":
+                deleteProduct(request);
                 break;
             default:
                 throw new AssertionError();
@@ -71,7 +74,7 @@ public class ProductAdminController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void addProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void addProduct(HttpServletRequest request) {
         try {
             String title = request.getParameter("title");
             String description = request.getParameter("description");
@@ -146,7 +149,7 @@ public class ProductAdminController extends HttpServlet {
             
         } catch (ServletException | IOException | NumberFormatException e) {
              System.err.println("Lỗi khi thêm sản phẩm: " + e.getMessage());
-        e.printStackTrace(); // In ra stack trace để debug
+            
         }
         
         
@@ -154,6 +157,26 @@ public class ProductAdminController extends HttpServlet {
         
         
     
+
+    }
+
+    private void deleteProduct(HttpServletRequest request) {
+
+           int idBookVar = Integer.parseInt(request.getParameter("idBookVar")) ;
+           
+          bookVariantDAO.deleteBookById(idBookVar) ;
+          
+          // kiểm tra có id còn trong variants
+           int idBook = Integer.parseInt(request.getParameter("idBook")) ;
+           
+                 if (!bookVariantDAO.checkExitBook(idBook)) {
+            productDAO.deleteBookById(idBook) ;
+        }
+  
+                 
+                 
+
+
 
     }
 

@@ -136,4 +136,15 @@ public class ProductDAO extends GenericDAO<Books> {
         return findTotalRecordGenericDAO(Books.class, sql, parameterMap);
     }
 
+    public void deleteBookById(int idBook) {
+    String sql ="DELETE FROM [dbo].[Books]\n" +
+"      WHERE book_id = ?" ;
+    
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("idBook", idBook);
+
+        deleteGenericDAO(sql, parameterMap) ;
+
+    }
+
 }

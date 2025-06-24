@@ -45,7 +45,7 @@ public class ProductDetailsController extends HttpServlet {
        List<Materials> materialList = new MaterialsDAO().findAll() ;
        List<Languages> languageList = new LanguagesDAO().findAll();
     
-
+        
 
       //set product vao request chuyen sang product-details.jsp
       request.setAttribute("book", bookFoundById);

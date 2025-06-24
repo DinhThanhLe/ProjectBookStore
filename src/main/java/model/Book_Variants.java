@@ -33,12 +33,12 @@ public class Book_Variants {
     private Integer stock_quantity;
     private double weight;
     
-    // Display fields từ JOIN
+//     Display fields từ JOIN
     private String title;           // Từ Books
     private String material_type;   // Từ Materials
     private String language_name;   // Từ Languages
     private String category_name;   // Từ Categories (qua Books)
     private String author_name;     // Từ Authors (qua Books)
-    private String description;
+//    private String description;
     
 }
