@@ -14,7 +14,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>B?n có ch?c ch?n mu?n xoá s?n ph?m này không?</p>
+                <p>B?n có ch?c ch?n mu?n xóa?</p>
             </div>
             <div class="modal-footer">
                 <form action="product?action=delete" method="POST">

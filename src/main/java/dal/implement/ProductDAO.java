@@ -147,4 +147,31 @@ public class ProductDAO extends GenericDAO<Books> {
 
     }
 
+    public int insertIfNotExists(String title) {
+
+   // Kiểm tra chất liệu đã tồn tại chưa
+        Books existingBook = findByTitle(title);
+        if (existingBook != null) {
+            return existingBook.getBook_id();
+        }
+        
+        return -1 ;
+
+
+
+
+    }
+
+    private Books findByTitle(String title) {
+       String sql = "SELECT * FROM [dbo].[Books] WHERE title = ? ";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("title", title);
+        
+        List<Books> list = queryGenericDAO(Books.class, sql, parameterMap);
+        return list.isEmpty() ? null : list.get(0);
+
+
+
+    }
+
 }

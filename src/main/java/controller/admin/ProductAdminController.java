@@ -79,17 +79,15 @@ public class ProductAdminController extends HttpServlet {
             String title = request.getParameter("title");
             String description = request.getParameter("description");
 
-           
-
             String authorName = request.getParameter("author");
             String languageName = request.getParameter("languages");
             String materialType = request.getParameter("material");
             double price = Double.parseDouble(request.getParameter("price"));
-            int category_id = Integer.parseInt(request.getParameter("category")) ;
+            int category_id = Integer.parseInt(request.getParameter("category"));
             int stockQuantity = Integer.parseInt(request.getParameter("quantity"));
             //image
             Part part = request.getPart("image"); // Lấy phần dữ liệu gửi lên có tên là "image"
-             String fileName = part.getSubmittedFileName();
+            String fileName = part.getSubmittedFileName();
 // Đường dẫn thư mục để lưu ảnh (trong thư mục "images" của ứng dụng)
             String path = request.getServletContext().getRealPath("/img/product");
 
@@ -105,31 +103,34 @@ public class ProductAdminController extends HttpServlet {
             File image = new File(dir, part.getSubmittedFileName());
 
 // Ghi dữ liệu từ phần upload vào file ảnh
-            part.write(image.getAbsolutePath())  ;
+            part.write(image.getAbsolutePath());
 
-             // 1. Kiểm tra và thêm tác giả nếu chưa tồn tại
+            // 1. Kiểm tra và thêm tác giả nếu chưa tồn tại
             int authorId = authorDAO.insertIfNotExists(authorName);
-            
+
             // 2. Kiểm tra và thêm ngôn ngữ nếu chưa tồn tại
             int languageId = languagesDAO.insertIfNotExists(languageName);
-            
+
             // 3. Kiểm tra và thêm chất liệu nếu chưa tồn tại
             int materialId = materialsDAO.insertIfNotExists(materialType);
-            
-            // 4. Thêm sách vào bảng Books
-            Books newBook = Books.builder()
-                    .title(title)
-                    .description(description)
-                    .cover_image_url(fileName)
-                 
-                    .category_id(category_id) 
-                    
-                    .author_id(authorId)
-                    .build();
-            
-            int bookId = productDAO.insert(newBook);
-            
-            if (bookId > 0) {
+
+            // Kiểm tra và thêm sách nếu sách chưa tồn tại 
+            int bookId;
+            if (productDAO.insertIfNotExists(title) > 0) {
+                bookId = productDAO.insertIfNotExists(title);
+            } else {
+                Books newBook = Books.builder()
+                        .title(title)
+                        .description(description)
+                        .cover_image_url(fileName)
+                        .category_id(category_id)
+                        .author_id(authorId)
+                        .build();
+
+                bookId = productDAO.insert(newBook);
+            }
+
+            if (bookId > 0 && !bookVariantDAO.checkDuplicate(bookId, materialId, languageId)) {
                 // 5. Thêm biến thể sách vào bảng Book_Variants
                 Book_Variants newVariant = Book_Variants.builder()
                         .book_id(bookId)
@@ -137,46 +138,31 @@ public class ProductAdminController extends HttpServlet {
                         .language_id(languageId)
                         .price(price)
                         .stock_quantity(stockQuantity)
-                       
                         .build();
-                
+
                 int variantId = bookVariantDAO.insert(newVariant);
-               System.out.println("Variant ID được tạo: " + variantId);
-            }            
-             
-            
-            
-            
+                System.out.println("Variant ID được tạo: " + variantId);
+            }
+
         } catch (ServletException | IOException | NumberFormatException e) {
-             System.err.println("Lỗi khi thêm sản phẩm: " + e.getMessage());
-            
+            System.err.println("Lỗi khi thêm sản phẩm: " + e.getMessage());
+
         }
-        
-        
-        
-        
-        
-    
 
     }
 
     private void deleteProduct(HttpServletRequest request) {
 
-           int idBookVar = Integer.parseInt(request.getParameter("idBookVar")) ;
-           
-          bookVariantDAO.deleteBookById(idBookVar) ;
-          
-          // kiểm tra có id còn trong variants
-           int idBook = Integer.parseInt(request.getParameter("idBook")) ;
-           
-                 if (!bookVariantDAO.checkExitBook(idBook)) {
-            productDAO.deleteBookById(idBook) ;
+        int idBookVar = Integer.parseInt(request.getParameter("idBookVar"));
+
+        bookVariantDAO.deleteBookById(idBookVar);
+
+        // kiểm tra có id còn trong variants
+        int idBook = Integer.parseInt(request.getParameter("idBook"));
+         
+        if (!bookVariantDAO.isLastVariantDeleted(idBook) ) {
+            productDAO.deleteBookById(idBook);
         }
-  
-                 
-                 
-
-
 
     }
 

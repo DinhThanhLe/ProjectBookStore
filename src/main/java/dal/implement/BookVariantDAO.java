@@ -16,8 +16,10 @@ import model.Books;
  */
 public class BookVariantDAO extends GenericDAO<Book_Variants> {
 
+    public boolean insertIfNotExists;
+
     public List<Book_Variants> getVariantsByBookId(Books book) {
-        String sql = " SELECT bv.variant_id, bv.book_id, b.title,   \n" +
+        String sql = " SELECT bv.variant_id, bv.book_id, b.title,b.cover_image_url,   \n" +
 "              bv.material_id, m.material_type,  \n" +
 "              bv.language_id, l.language_name,  \n" +
 "              bv.price, bv.stock_quantity, bv.weight,  \n" +
@@ -40,7 +42,7 @@ public class BookVariantDAO extends GenericDAO<Book_Variants> {
 
     @Override
     public List<Book_Variants> findAll() {
-        String sql = "SELECT bv.variant_id, bv.book_id, b.title, \n" +
+        String sql = "SELECT bv.variant_id, bv.book_id, b.title,b.cover_image_url, \n" +
             " bv.material_id, m.material_type,\n" +
             " bv.language_id, l.language_name,\n" +
             " bv.price, bv.stock_quantity, bv.weight,\n" +
@@ -78,9 +80,9 @@ public class BookVariantDAO extends GenericDAO<Book_Variants> {
 
     }
 
-    public boolean checkExitBook(int idBook) {
+    public boolean isLastVariantDeleted(int idBook) {
   String sql = "SELECT [variant_id]\n" +
-"      ,[book_id]\n" +
+"      ,[book_id] , b.cover_image_url \n" +
 "      ,[material_id]\n" +
 "      ,[language_id]\n" +
 "      ,[price]\n" +
@@ -88,10 +90,34 @@ public class BookVariantDAO extends GenericDAO<Book_Variants> {
 "      ,[weight]\n" +
 "  FROM [dbo].[Book_Variants] where book_id = ? " ;
 
- parameterMap = new LinkedHashMap<>() ;
+         parameterMap = new LinkedHashMap<>() ;
          parameterMap.put("idBook", idBook);
          
+ return queryGenericDAO(Book_Variants.class, sql, parameterMap).size() == 0 ?   true :false ;
+ 
+
+    }
+    
+
+    public boolean checkDuplicate(int bookId, int materialId, int languageId) {
+
+String sql = "SELECT [variant_id],\n" +
+"       [book_id],\n" +
+"       [material_id],\n" +
+"       [language_id],\n" +
+"       [price],\n" +
+"       [stock_quantity],\n" +
+"       [weight]\n" +
+"FROM [dbo].[Book_Variants]\n" +
+"WHERE [book_id] = ? AND [material_id] = ? AND [language_id] = ? "; 
+ parameterMap = new LinkedHashMap<>() ;
+         parameterMap.put("bookId", bookId);
+         parameterMap.put("materialId", materialId);
+         parameterMap.put("languageId", languageId);
+
+
  return queryGenericDAO(Book_Variants.class, sql, parameterMap).size() == 0 ? false : true ;
+
 
     }
 

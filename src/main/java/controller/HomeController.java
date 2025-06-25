@@ -44,8 +44,8 @@ public class HomeController extends HttpServlet {
         List<Categories> listCategory = categoryDao.findAll() ;
 
          HttpSession session = request.getSession() ;
-         session.setAttribute("listBook", listBook);
-         session.setAttribute(CommonConst.SESSION_CATEGORY, listCategory);
+         request.setAttribute("listBook", listBook);
+         request.setAttribute(CommonConst.SESSION_CATEGORY, listCategory);
          request.setAttribute("pageControl", pageControl );
          
          String url="/view/user/home.jsp" ;

@@ -79,7 +79,9 @@
                                         <thead>
                                             <tr>
                                                 <th>Id</th>
+                                                
                                                 <th>Title</th>
+                                                <th>Image</th>
                                                 <th>Category</th>
                                                 <th>Author</th>
                                                 <th>Language</th>
@@ -94,23 +96,30 @@
                                         <c:forEach items="${listBookVariant}" var="b" > 
                                             <tr>
                                                 <td name="id">${b.book_id}</td>
-                                                <td>${b.title}</td>
-                                                <td>${b.category_name}</td>
-                                                <td>${b.author_name}</td>
-                                                <td>${b.language_name}</td>
-                                                <td>${b.material_type}</td>
-                                                <td>${b.stock_quantity}</td>
-                                                <td>${b.price}</td>
+                                                <td name ="title">${b.title}</td>
+                                                <td name="image">
+                                             <img src="${pageContext.request.contextPath}/img/product/${b.cover_image_url}" width="100" height="100" alt="alt"/>
+      
+
+                                                </td>
+                                                <td name ="category">${b.category_name}</td>
+                                                <td name="author">${b.author_name}</td>
+                                                <td name="language">${b.language_name}</td>
+                                                <td name="material">${b.material_type}</td>
+                                                <td name="stock">${b.stock_quantity}</td>
+                                                <td name="price">${b.price}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary">Edit </button>
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-toggle="modal" 
+                                                            data-target="#editProductModal"
+                                                            onclick="editProductModal(this)">
+                                                        Edit
+                                                    </button>
                                                     <button type="button" class="btn btn-danger" 
                                                             data-toggle="modal" data-target="#delete-product-modal"
                                                             onclick="deleteProductModal(${b.book_id} ,${b.variant_id} )">
                                                         Delete
                                                     </button>
-
-
-
                                                 </td>
 
                                             </tr>
@@ -140,12 +149,12 @@
                 <i class="fas fa-angle-up"></i>
             </a>
 
-            <!-- Logout Modal-->
-            <jsp:include page="logoutModal.jsp"></jsp:include>
-
-            <jsp:include page="addProductModal.jsp"></jsp:include>
-            <jsp:include page="deleteProductModal.jsp"></jsp:include>
-
+            
+            
+            
+            <script>
+  console.log("EDIT_MODAL LOADED:", typeof window.editProductModal);
+</script>
                 <!-- Bootstrap core JavaScript-->
                 <script src="<%= request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
             <script src="<%= request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -160,16 +169,23 @@
 
             <!-- Custom scripts for all pages-->
             <script src="<%= request.getContextPath() %>/js/sb-admin.min.js"></script>
-            <script src="<%= request.getContextPath() %>/js/colReorder-bootstrap4-min.js"></script>
-            <script src="<%= request.getContextPath() %>/js/colReorder-dataTables-min.js"></script>
+            
+           
 
             <!-- Demo scripts for this page-->
             <script src="<%= request.getContextPath() %>/js/demo/datatables-demo.js"></script>
             <script src="<%= request.getContextPath() %>/js/demo/chart-area-demo.js"></script>
             <script src="<%= request.getContextPath() %>/js/colReorder-dataTables-min.js"></script>
             <script src="<%= request.getContextPath() %>/js/colReorder-bootstrap4-min.js"></script>
-
-
+          <!-- Logout Modal-->
+            <jsp:include page="logoutModal.jsp"></jsp:include>
+            
+            <jsp:include page="addProductModal.jsp"></jsp:include>
+            
+            <jsp:include page="deleteProductModal.jsp"></jsp:include>
+            <jsp:include page="editProductModal.jsp"></jsp:include>
+           
+           
     </body>
 
 </html>
