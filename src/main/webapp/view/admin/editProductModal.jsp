@@ -13,11 +13,14 @@
             <div class="modal-body">
                 <form id="editBookForm" action="product?action=edit" method="POST" enctype="multipart/form-data">
                     <div class="form-group" style="display: none">
-                        <input type="text" class="form-control" id="idEditInput" name="id">
+                        <input type="text" class="form-control" id="idBookEditInput" name="idBook">
+                    </div>
+                    <div class="form-group" style="display: none">
+                        <input type="text" class="form-control" id="idVarEditInput" name="idVar">
                     </div>
                     <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="nameEditInput" name="name">
+                        <label for="name">Title:</label>
+                        <input type="text" class="form-control" id="nameEditInput" name="title">
                         <div id="nameEditError" class="error"></div>
                     </div>
                     <div class="form-group">
@@ -62,6 +65,10 @@
                         <img id="previewImage2" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Preview"
                              style="display: none; max-width: 300px; max-height: 300px;">
                         <input type="hidden" id="currentImage" name="currentImage" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">description</label>
+                        <input type="text" class="form-control"  name="description">
                     </div>
                 </form>
             </div>
@@ -125,7 +132,8 @@
         };
 
         window.editProductModal = function (button) {
-            let id = $(button).closest('tr').find('td[name="id"]').text().trim();
+            let idBook = $(button).closest('tr').find('td[name="idBook"]').text().trim();
+            let idVar = $(button).closest('tr').find('td[name="idVar"]').text().trim();
             let title = $(button).closest('tr').find('td[name="title"]').text().trim();
             let author = $(button).closest('tr').find('td[name="author"]').text().trim();
             let price = $(button).closest('tr').find('td[name="price"]').text().trim().split('$')[0];
@@ -133,7 +141,8 @@
             let category = $(button).closest('tr').find('td[name="category"]').text().trim();
             let image = $(button).closest('tr').find('td[name="image"] img').attr('src');
 
-            $('#idEditInput').val(id);
+            $('#idBookEditInput').val(idBook);
+            $('#idVarEditInput').val(idVar);
             $('#nameEditInput').val(title);
             $('#authorEditInput').val(author);
             $('#priceEditInput').val(price);

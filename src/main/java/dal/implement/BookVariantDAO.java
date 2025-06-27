@@ -73,7 +73,7 @@ public class BookVariantDAO extends GenericDAO<Book_Variants> {
         String sql ="DELETE FROM [dbo].[Book_Variants]\n" +
                 "      WHERE variant_id  = ? " ;
         parameterMap = new LinkedHashMap<>() ;
-         parameterMap.put("id", id);
+         parameterMap.put("variant_id", id);
 
         
          deleteGenericDAO(sql, parameterMap);
@@ -91,7 +91,7 @@ public class BookVariantDAO extends GenericDAO<Book_Variants> {
 "  FROM [dbo].[Book_Variants] where book_id = ? " ;
 
          parameterMap = new LinkedHashMap<>() ;
-         parameterMap.put("idBook", idBook);
+         parameterMap.put("book_id", idBook);
          
  return queryGenericDAO(Book_Variants.class, sql, parameterMap).size() == 0 ?   true :false ;
  
@@ -118,6 +118,23 @@ String sql = "SELECT [variant_id],\n" +
 
  return queryGenericDAO(Book_Variants.class, sql, parameterMap).size() == 0 ? false : true ;
 
+
+    }
+
+    public void updateBookVar(Book_Variants bookVarUpdate) {
+   String sql = "UPDATE [dbo].[Book_Variants]\n" +
+"   SET \n" +
+"      [price] = ? ,\n" +
+"	  [stock_quantity] = ? \n" +
+"\n" +
+"      \n" +
+" WHERE variant_id = ? ";
+   
+parameterMap = new LinkedHashMap<>() ;
+         parameterMap.put("price", bookVarUpdate.getPrice());
+         parameterMap.put("stock_quantity", bookVarUpdate.getStock_quantity());
+         parameterMap.put("variant_id", bookVarUpdate.getVariant_id());
+        updateGenericDAO(sql, parameterMap) ;
 
     }
 

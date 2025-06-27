@@ -39,7 +39,7 @@ public class Book_Variants {
     private String language_name;   // Từ Languages
     private String category_name;   // Từ Categories (qua Books)
     private String author_name;     // Từ Authors (qua Books)
-//    private String description;
+
    private String cover_image_url;
 
     

@@ -62,6 +62,9 @@ public class ProductAdminController extends HttpServlet {
             case "delete":
                 deleteProduct(request);
                 break;
+            case "edit":
+                editProduct(request);
+                break;
             default:
                 throw new AssertionError();
         }
@@ -116,8 +119,8 @@ public class ProductAdminController extends HttpServlet {
 
             // Kiểm tra và thêm sách nếu sách chưa tồn tại 
             int bookId;
-            if (productDAO.insertIfNotExists(title) > 0) {
-                bookId = productDAO.insertIfNotExists(title);
+            if (productDAO.checkExistBook(title) > 0) {
+                bookId = productDAO.checkExistBook(title);
             } else {
                 Books newBook = Books.builder()
                         .title(title)
@@ -159,9 +162,70 @@ public class ProductAdminController extends HttpServlet {
 
         // kiểm tra có id còn trong variants
         int idBook = Integer.parseInt(request.getParameter("idBook"));
-         
-        if (!bookVariantDAO.isLastVariantDeleted(idBook) ) {
+
+        if (!bookVariantDAO.isLastVariantDeleted(idBook)) {
             productDAO.deleteBookById(idBook);
+        }
+
+    }
+
+    private void editProduct(HttpServletRequest request) {
+
+        try {
+            int idVar = Integer.parseInt( request.getParameter("idVar"));
+            int  idBook = Integer.parseInt(request.getParameter("idBook"));
+            String title = request.getParameter("title");
+            String author = request.getParameter("author");
+            double price = Double.parseDouble(request.getParameter("price")) ;
+            int quantity = Integer.parseInt(request.getParameter("quantity")); 
+            int categoryId = Integer.parseInt(request.getParameter("category"));
+            
+            String description = request.getParameter("description");
+            // Lấy part chứa ảnh
+            Part part = request.getPart("image");
+
+// Lấy tên file (tránh null)
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+
+// Đường dẫn thư mục gốc lưu ảnh (trên server)
+            String uploadPath = request.getServletContext().getRealPath("") + File.separator + "img" + File.separator + "product";
+
+// Tạo thư mục nếu chưa có
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+
+// Ghi file vào thư mục 
+            String filePath = uploadPath + File.separator + fileName;
+            part.write(filePath);
+          
+            int authorId = authorDAO.insertIfNotExists(author) ;
+            
+            Books bookUpdate = Books.builder()
+                        .book_id(idBook)
+                        .title(title)
+                        .description(description)
+                        .cover_image_url(fileName)
+                        .category_id(categoryId)
+                        .author_id(authorId)
+                        .build();
+            
+            productDAO.updateBook(bookUpdate) ;
+            
+            
+            Book_Variants bookVarUpdate = Book_Variants.builder()
+                                         .variant_id(idVar)
+                    
+                    .price(price)
+                    .stock_quantity(quantity)
+                    .build() ;
+            
+            bookVariantDAO.updateBookVar(bookVarUpdate) ;
+                    
+                        
+            
+        } catch (Exception e) {
         }
 
     }

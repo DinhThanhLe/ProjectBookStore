@@ -134,7 +134,8 @@ public abstract class GenericDAO<T> extends DBContext {
 
             // Thực thi truy vấn
             resultSet = statement.executeQuery();
-
+             System.out.println("Executing query: " + sql);
+             System.out.println("With parameters: " + parameters);
             // Khai báo danh sách kết quả
             // Duyệt result set   
             while (resultSet.next()) {

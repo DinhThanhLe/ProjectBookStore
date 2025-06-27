@@ -141,13 +141,13 @@ public class ProductDAO extends GenericDAO<Books> {
 "      WHERE book_id = ?" ;
     
         parameterMap = new LinkedHashMap<>();
-        parameterMap.put("idBook", idBook);
+        parameterMap.put("book_id", idBook);
 
         deleteGenericDAO(sql, parameterMap) ;
 
     }
 
-    public int insertIfNotExists(String title) {
+    public int checkExistBook(String title) {
 
    // Kiểm tra chất liệu đã tồn tại chưa
         Books existingBook = findByTitle(title);
@@ -155,7 +155,7 @@ public class ProductDAO extends GenericDAO<Books> {
             return existingBook.getBook_id();
         }
         
-        return -1 ;
+        return -1    ;
 
 
 
@@ -172,6 +172,28 @@ public class ProductDAO extends GenericDAO<Books> {
 
 
 
+    }
+
+    public void updateBook(Books bookUpdate) {
+
+      String sql = "UPDATE [dbo].[Books]\n" +
+"   SET [title] = ? \n" +
+"      ,[description] = ? \n" +
+"      ,[cover_image_url] = ? \n" +
+
+"      ,[category_id] = ?  \n" +
+
+"      ,[author_id] = ? \n" +
+" WHERE book_id = ? " ;
+          parameterMap = new LinkedHashMap<>();
+        parameterMap.put("title", bookUpdate.getTitle());
+        parameterMap.put("description", bookUpdate.getDescription());
+        parameterMap.put("cover_image_url", bookUpdate.getCover_image_url());
+        parameterMap.put("category_id", bookUpdate.getCategory_id());
+        parameterMap.put("author_id", bookUpdate.getAuthor_id());
+        parameterMap.put("book_id", bookUpdate.getBook_id());
+        
+        updateGenericDAO(sql, parameterMap) ;
     }
 
 }

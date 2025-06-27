@@ -78,7 +78,8 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Id</th>
+                                                <th>Id Book</th>
+                                                <th>Id Variant</th>
                                                 
                                                 <th>Title</th>
                                                 <th>Image</th>
@@ -95,7 +96,8 @@
                                         <tbody>
                                         <c:forEach items="${listBookVariant}" var="b" > 
                                             <tr>
-                                                <td name="id">${b.book_id}</td>
+                                                <td name="idBook">${b.book_id}</td>
+                                                <td name="idVar">${b.variant_id}</td>
                                                 <td name ="title">${b.title}</td>
                                                 <td name="image">
                                              <img src="${pageContext.request.contextPath}/img/product/${b.cover_image_url}" width="100" height="100" alt="alt"/>

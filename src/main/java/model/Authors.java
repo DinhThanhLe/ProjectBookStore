@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.ToString;
 /**
  *
  * @author legion
- */
+// */
 @ToString
 @Builder
 @Data
@@ -27,6 +28,8 @@ public class Authors {
     private int author_id ;
     private String  author_name ;
     private String  biography ;
-    private Data created_at ;
+    private Timestamp created_at;
+    
+    
     
 }
