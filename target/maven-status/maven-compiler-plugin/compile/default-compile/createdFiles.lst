@@ -9,11 +9,15 @@ model\Languages$LanguagesBuilder.class
 model\Materials.class
 model\PageControl$PageControlBuilder.class
 model\Book_Variants.class
+model\Users.class
 model\Authors.class
 dal\implement\ProductDAO.class
 com\mycompany\bookstore2\JakartaRestConfiguration.class
+controller\authentication\AuthenticationController.class
 dal\implement\BookVariantDAO.class
 dal\implement\LanguagesDAO.class
+model\Users$UsersBuilder.class
+dal\implement\UserDao.class
 dal\implement\MaterialsDAO.class
 model\PageControl.class
 model\Categories$CategoriesBuilder.class

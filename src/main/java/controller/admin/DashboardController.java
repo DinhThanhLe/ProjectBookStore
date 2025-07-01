@@ -42,10 +42,8 @@ public class DashboardController extends HttpServlet {
         List<Categories> listCategory = categoryDao.findAll();
         request.setAttribute("listBookVariant", listBookVariant );
         request.setAttribute(CommonConst.SESSION_CATEGORY, listCategory);
-         System.out.println("Số lượng thể loại là :" + listCategory.size());
-        
+        System.out.println("Số lượng thể loại là :" + listCategory.size());
         request.getRequestDispatcher("../view/admin/dashboard.jsp").forward(request, response) ;
-
     }
 
     @Override
